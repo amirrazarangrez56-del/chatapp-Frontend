@@ -24,13 +24,14 @@ export const SocketProvider = ({ children }) => {
     if (!token) return;
 
     // Create socket connection
-    socketRef.current = io(import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000', {
-      auth: { token },
-      transports: ['websocket', 'polling'],
-      reconnection: true,
-      reconnectionAttempts: 5,
-      reconnectionDelay: 1000,
-    });
+socketRef.current = io(import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000', {
+  auth: { token },
+  // Change this line:
+  transports: ['polling', 'websocket'],  // polling FIRST, then upgrade
+  reconnection: true,
+  reconnectionAttempts: 5,
+  reconnectionDelay: 1000,
+});
 
     socketRef.current.on('connect', () => {
       console.log('🟢 Socket connected:', socketRef.current.id);
