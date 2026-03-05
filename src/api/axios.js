@@ -5,7 +5,6 @@ const API = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
-// Attach JWT to every request
 API.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -14,7 +13,6 @@ API.interceptors.request.use((config) => {
   return config;
 });
 
-// Handle 401 globally
 API.interceptors.response.use(
   (res) => res,
   (err) => {
